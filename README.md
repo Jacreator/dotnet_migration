@@ -47,5 +47,6 @@ Resource group `rg-readings-demo`, region Spain Central (Azure for Students only
 | Log Analytics workspace | `log-readings-demo` | Storage for Application Insights |
 | Application Insights | `appi-readings-demo` | Telemetry from the new app |
 | Key Vault | `kv-readings-jacreator2` (RBAC) | Held the old app's connection string |
+| User-assigned managed identity | `id-github-deploy` | GitHub Actions signs in as this (OIDC, `master` only), can deploy and swap the new app only |
 
 Remove everything when finished: `az group delete -n rg-readings-demo`.
