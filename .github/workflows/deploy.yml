@@ -1,0 +1,57 @@
+# Build, test, deploy to the staging slot, check /health, swap to production.
+# Signs in to Azure with OpenID Connect: no stored password or secret. Setup: infra/06-pipeline.md
+name: build-test-deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write   # lets the job ask GitHub for an OIDC token
+  contents: read
+
+env:
+  RESOURCE_GROUP: rg-readings-demo
+  WEB_APP: app-readings-web-jacreator2
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Test
+        run: dotnet test modern/ReadingsApp.Tests -c Release
+
+      - name: Publish
+        run: dotnet publish modern/ReadingsApp.Web -c Release -o publish
+
+      - name: Sign in to Azure (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to staging slot
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.WEB_APP }}
+          slot-name: staging
+          package: publish
+
+      - name: Check staging health
+        run: |
+          for i in $(seq 1 10); do
+            curl -fsS "https://${WEB_APP}-staging.azurewebsites.net/health" && exit 0
+            sleep 15
+          done
+          echo "Staging is not healthy, not swapping." && exit 1
+
+      - name: Swap staging into production
+        run: az webapp deployment slot swap -g "$RESOURCE_GROUP" -n "$WEB_APP" -s staging --target-slot production

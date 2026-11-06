@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title - Meter Readings</title>
+    <link href="~/Content/site.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <strong>Meter Readings</strong> <small>(legacy .NET Framework)</small>
+        <nav>
+            @Html.ActionLink("View readings", "Index", "Readings")
+            @Html.ActionLink("Submit a reading", "Create", "Readings")
+        </nav>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+    <footer>Release: @System.Configuration.ConfigurationManager.AppSettings["ReleaseLabel"]</footer>
+</body>
+</html>

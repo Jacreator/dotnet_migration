@@ -1,0 +1,26 @@
+@model ReadingInput
+@{
+    ViewData["Title"] = "Submit a reading";
+}
+<h1>Submit a reading</h1>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div class="field">
+        <label asp-for="MeterId"></label>
+        <input asp-for="MeterId" />
+        <span asp-validation-for="MeterId"></span>
+    </div>
+    <div class="field">
+        <label asp-for="Value"></label>
+        <input asp-for="Value" type="number" step="any" />
+        <span asp-validation-for="Value"></span>
+    </div>
+    <div class="field">
+        <label asp-for="ReadingDate"></label>
+        <input asp-for="ReadingDate" type="date" asp-format="{0:yyyy-MM-dd}" />
+        <span asp-validation-for="ReadingDate"></span>
+    </div>
+    <button type="submit">Save reading</button>
+</form>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - Meter Readings</title>
+    <link href="~/Content/site.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <strong>Meter Readings</strong> <small>(new app, .NET @Environment.Version)</small>
+        <nav>
+            <a asp-controller="Readings" asp-action="Index">View readings</a>
+            <a asp-controller="Readings" asp-action="Create">Submit a reading</a>
+        </nav>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+</body>
+</html>

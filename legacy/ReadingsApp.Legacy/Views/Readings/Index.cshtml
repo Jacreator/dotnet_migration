@@ -1,0 +1,42 @@
+@model IEnumerable<ReadingsApp.Models.Reading>
+@{
+    ViewBag.Title = "Readings";
+}
+<h1>Readings</h1>
+
+@if (TempData["Message"] != null)
+{
+    <p class="message">@TempData["Message"]</p>
+}
+
+@using (Html.BeginForm("Index", "Readings", FormMethod.Get, new { @class = "filter" }))
+{
+    <label for="meterId">Meter ID</label>
+    <input id="meterId" name="meterId" value="@ViewBag.MeterId" />
+    <button type="submit">Filter</button>
+    @Html.ActionLink("Clear", "Index")
+}
+
+@if (!Model.Any())
+{
+    <p>No readings found.</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr><th>Meter ID</th><th>Reading</th><th>Date</th><th>Saved (UTC)</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var reading in Model)
+            {
+                <tr>
+                    <td>@reading.MeterId</td>
+                    <td class="num">@reading.Value</td>
+                    <td>@reading.ReadingDate.ToString("dd MMM yyyy")</td>
+                    <td>@reading.CreatedUtc.ToString("dd MMM yyyy HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

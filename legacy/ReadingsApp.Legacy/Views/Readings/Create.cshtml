@@ -1,0 +1,28 @@
+@model ReadingsApp.Models.ReadingInput
+@{
+    ViewBag.Title = "Submit a reading";
+}
+<h1>Submit a reading</h1>
+
+@using (Html.BeginForm("Create", "Readings", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="field">
+        @Html.LabelFor(m => m.MeterId)
+        @Html.TextBoxFor(m => m.MeterId)
+        @Html.ValidationMessageFor(m => m.MeterId)
+    </div>
+    <div class="field">
+        @Html.LabelFor(m => m.Value)
+        @Html.TextBoxFor(m => m.Value, new { type = "number", step = "any" })
+        @Html.ValidationMessageFor(m => m.Value)
+    </div>
+    <div class="field">
+        @Html.LabelFor(m => m.ReadingDate)
+        @Html.TextBoxFor(m => m.ReadingDate, "{0:yyyy-MM-dd}", new { type = "date" })
+        @Html.ValidationMessageFor(m => m.ReadingDate)
+    </div>
+    <button type="submit">Save reading</button>
+}

@@ -1,0 +1,12 @@
+<!-- Shared by the old app (.NET Framework 4.8) and the new app (.NET 10): models, the rules and the repository interface. -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- ValidationResult is not part of .NET Standard 2.0 itself. -->
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
+</Project>

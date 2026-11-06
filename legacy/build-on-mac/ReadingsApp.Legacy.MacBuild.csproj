@@ -1,0 +1,28 @@
+<!--
+  Build helper only. Compiles the UNCHANGED legacy source for .NET Framework 4.8 on macOS or Linux,
+  using the .NET SDK and the 4.8 reference assemblies. Visual Studio users keep using
+  legacy/ReadingsApp.Legacy.sln. Package versions match legacy/ReadingsApp.Legacy/packages.config.
+-->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <AssemblyName>ReadingsApp.Legacy</AssemblyName>
+    <RootNamespace>ReadingsApp.Legacy</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../ReadingsApp.Legacy/**/*.cs" Exclude="../ReadingsApp.Legacy/bin/**;../ReadingsApp.Legacy/obj/**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <PackageReference Include="EntityFramework" Version="6.5.1" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
+    <ProjectReference Include="../../shared/ReadingsApp.Core/ReadingsApp.Core.csproj" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
+</Project>
